@@ -1,2 +1,89 @@
-# Jour-1-tiktok-reversing
-Je ne suis pas expert mais je sais me débrouiller
+Analyse des requêtes TikTok - Premier jour
+J'ai installé l’appli TikTok en APK sur un émulateur Android (Nemu) pour observer les requêtes envoyées lors de l’envoi d’une vue.
+
+Requête observée
+Méthode : POST
+
+Endpoint :
+https://search16-normal-no1a.tiktokv.eu/aweme/v1/search/videosug/
+
+Détails
+aweme correspond à l’ID de la vidéo.
+Par exemple, si l’URL est :
+www.tiktok.com/@user123/video/123456789123456789
+alors aweme = 123456789123456789
+
+Sources possibles :
+
+other_homepage homepage = "pourtoi"
+
+other = autre que pourtoi
+Cela signifie que la vidéo est vue depuis un endroit autre que "Pour Toi", comme un profil ou la section "J’aime", etc.
+
+Headers importants
+Header	Description
+X-Argus	Valeur constante (644 caractères), générée dynamiquement
+X-Gorgon	Commence par 0404, valeur constante (52 caractères)
+X-Khronos	Timestamp serveur de l’utilisateur envoyant la vue
+X-Ladon	Valeur aléatoire (48 caractères)
+x-bd-kmsv	0
+x-metasec-event-source	native
+X-Tt-Token	Différent selon le compte / session
+x-tt-request-tag	Fixe : n0;nr=011;bg=0
+x-tt-store-region	Région du compte (fr dans cet exemple)
+x-vc-bdturing-sdk-version	Version SDK, ici 2.3.8.i18n
+User-Agent	Exemple : com.zhiliaoapp.musically/2023700040 (Linux; U; Android 9; fr; SM-N975F; Build/PI;tt-ok/3.12.13.4-tiktok)
+
+Note : Le header X-Khronos (timestamp) peut varier selon ta position géographique et la localisation du serveur.
+
+Paramètres de la requête
+plaintext
+Copier
+Modifier
+version_code: 370004
+ab_version: 37.0.4
+device_platform: android
+device_id: 7508489926566102560
+aid: 1233
+iid: 7508490440816396064
+os: android
+ssmix: a
+_rticket: 1748216988933
+cdid: 0f47156e-11cb-4a81-8f92-0486721556b6
+channel: googleplay
+app_name: musical_ly
+version_name: 37.0.4
+manifest_version_code: 2023700040
+update_version_code: 2023700040
+resolution: 900*1600
+dpi: 300
+device_type: SM-N975F
+device_brand: samsung
+language: fr
+os_api: 28
+os_version: 9
+ac: wifi
+is_pad: 0
+current_region: FR
+app_type: normal
+sys_region: FR
+last_install_time: 1748214177
+mcc_mnc: 20813
+timezone_name: Asia/Shanghai
+residence: FR
+app_language: fr
+carrier_region: FR
+timezone_offset: 28800
+host_abi: armeabi-v7a
+locale: fr
+ac2: wifi
+uoo: 0
+op_region: FR
+build_number: 37.0.4
+region: FR
+ts: 1748209765
+openudid: 92d8b1e2c091298c
+
+Le paramètre _rticket est un timestamp en millisecondes utilisé pour sécuriser les requêtes.
+
+Le ts correspond au timestamp Unix en secondes.
